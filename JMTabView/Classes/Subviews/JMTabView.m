@@ -42,9 +42,22 @@
     self = [super initWithCoder:aDecoder];
     if (self)
     {
+        self.layer.borderWidth = 1.f;
+        self.layer.borderColor = [UIColor colorWithWhite:0.75 alpha:1.f].CGColor;
+        
+        self.layer.shadowColor = [UIColor blackColor].CGColor;
+        self.layer.shadowOffset = CGSizeMake(0, 0.f);
+        self.layer.shadowOpacity = 0.25f;
+        self.layer.shadowRadius = 1.f;
+        self.layer.shadowPath = [UIBezierPath bezierPathWithRoundedRect:self.bounds cornerRadius:self.layer.cornerRadius].CGPath;
+        self.clipsToBounds = NO;
+		
+        
+        self.clipsToBounds = YES;
         [self setBackgroundLayer:[[[BarBackgroundLayer alloc] init] autorelease]];
-        [self setTabContainer:[[[JMTabContainer alloc] initWithFrame:self.bounds] autorelease]];
-        self.itemPadding = kTabItemPadding; 
+        self.backgroundColor = [UIColor clearColor];
+        self.autoresizingMask = UIViewAutoresizingFlexibleWidth;
+        self.tabContainer = [[[JMTabContainer alloc] initWithFrame:self.bounds] autorelease];
         [self addSubview:self.tabContainer];
     }
     return self;
