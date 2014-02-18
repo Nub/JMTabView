@@ -17,9 +17,6 @@
 - (BOOL)isItemSelected:(JMTabItem *)tabItem;
 - (void)itemSelected:(JMTabItem *)tabItem;
 - (void)addTabItem:(JMTabItem *)tabItem;
-- (void)removeTabItem:(JMTabItem *)tabItem;
-- (void)removeAllTabItems;
 - (void)animateSelectionToItemAtIndex:(NSUInteger)itemIndex;
 - (NSUInteger)numberOfTabItems;
-- (JMTabItem *)tabItemAtIndex:(NSUInteger)index;
 @end

@@ -10,12 +10,6 @@
 @synthesize icon = icon_;
 @synthesize fixedWidth = fixedWidth_;
 @synthesize executeBlock = executeBlock_;
-@synthesize padding = padding_;
-- (void)setPadding:(CGSize)padding {
-    padding_ = padding;
-    
-    [self setNeedsDisplay];
-}
 
 - (void)dealloc;
 {
@@ -58,11 +52,11 @@
         width += kTabItemIconMargin;
     }
     
-    width += (self.padding.width * 2);
+    width += (kTabItemPadding.width * 2);
     
     CGFloat height = (titleSize.height > [self.icon size].height) ? titleSize.height : [self.icon size].height;
     
-    height += (self.padding.height * 2);
+    height += (kTabItemPadding.height * 2);
     
     if (self.fixedWidth > 0)
     {
@@ -76,25 +70,25 @@
 - (void)drawRect:(CGRect)rect;
 {
     CGContextRef context = UIGraphicsGetCurrentContext();
-    UIColor * shadowColor = [UIColor blackColor];
-    CGContextSetShadowWithColor(context, CGSizeMake(0.0f, 1.0f), 1.0f, [shadowColor CGColor]);
-    CGContextSaveGState(context);   
+//    UIColor * shadowColor = [UIColor blackColor];
+//    CGContextSetShadowWithColor(context, CGSizeMake(0.0f, 1.0f), 1.0f, [shadowColor CGColor]);
+    CGContextSaveGState(context);
     
-    if (self.highlighted)
-    {
-        CGRect bounds = CGRectInset(rect, 2., 2.);
-        CGFloat radius = 0.5f * CGRectGetHeight(bounds);
-        UIBezierPath * path = [UIBezierPath bezierPathWithRoundedRect:bounds cornerRadius:radius];
-        [[UIColor colorWithWhite:1. alpha:0.3] set];
-        path.lineWidth = 2.;
-        [path stroke];
-    }
+//    if (self.highlighted)
+//    {
+//        CGRect bounds = CGRectInset(rect, 2., 2.);
+//        CGFloat radius = 0.5f * CGRectGetHeight(bounds);
+//        UIBezierPath * path = [UIBezierPath bezierPathWithRoundedRect:bounds cornerRadius:radius];
+//        [[UIColor colorWithWhite:1. alpha:0.3] set];
+//        path.lineWidth = 2.;
+//        [path stroke];
+//    }
     
-    CGFloat xOffset = self.padding.width;
+    CGFloat xOffset = kTabItemPadding.width;
 
     if (self.icon)
     {
-        [self.icon drawAtPoint:CGPointMake(xOffset, self.padding.height)];
+        [self.icon drawAtPoint:CGPointMake(xOffset, kTabItemPadding.height)];
         xOffset += [self.icon size].width + kTabItemIconMargin;
     }
     

@@ -10,7 +10,7 @@
 #pragma Mark -
 #pragma Mark - JMTabViewDelegate
 
-@protocol JMTabViewDelegate <NSObject>
+@protocol JMTabViewDelegate
 -(void)tabView:(JMTabView *)tabView didSelectTabAtIndex:(NSUInteger)itemIndex;
 @end
 
@@ -23,13 +23,8 @@
 - (void)didSelectItemAtIndex:(NSUInteger)itemIndex;
 - (void)addTabItem:(JMTabItem *)tabItem;
 - (void)addTabItemWithTitle:(NSString *)title icon:(UIImage *)icon;
-
-- (void)removeTabItemAtIndex:(NSUInteger)index;
-- (void)removeAllTabItems;
-
-@property (nonatomic, assign) NSUInteger selectedIndex;
-@property (nonatomic,assign) IBOutlet id<JMTabViewDelegate> delegate;
-@property (nonatomic,assign) CGSize itemPadding;
+- (void)setSelectedIndex:(NSUInteger)itemIndex;
+@property (nonatomic,assign) id<JMTabViewDelegate> delegate;
 
 #if NS_BLOCKS_AVAILABLE
 - (void)addTabItemWithTitle:(NSString *)title icon:(UIImage *)icon executeBlock:(JMTabExecutionBlock)executeBlock;

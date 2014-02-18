@@ -3,6 +3,7 @@
 #import "JMTabContainer.h"
 #import "JMTabView.h"
 #import "UIView+Positioning.h"
+#import <QuartzCore/QuartzCore.h>
 
 #define kSelectionAnimation @"kSelectionAnimation"
 
@@ -78,20 +79,6 @@
     [self setNeedsLayout];
 }
 
-- (void)removeTabItem:(JMTabItem *)tabItem {
-    [self.tabItems removeObject:tabItem];
-    [tabItem removeFromSuperview];
-    [self setNeedsLayout];
-}
-
-- (void)removeAllTabItems {
-    for (JMTabItem *tabItem in self.tabItems) {
-        [tabItem removeFromSuperview];
-    }
-    [[self tabItems] removeAllObjects];
-    [self setNeedsLayout];
-}
-
 - (BOOL)isItemSelected:(JMTabItem *)tabItem;
 {
     return ([self.tabItems indexOfObject:tabItem] == self.selectedIndex);
@@ -130,12 +117,6 @@
 - (NSUInteger)numberOfTabItems;
 {
     return [self.tabItems count];
-}
-
-#pragma mark - Tab Item Accessors
-
-- (JMTabItem *)tabItemAtIndex:(NSUInteger)index {
-    return [self.tabItems objectAtIndex:index];
 }
 
 @end

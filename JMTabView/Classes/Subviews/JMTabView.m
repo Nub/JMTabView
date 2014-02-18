@@ -11,10 +11,8 @@
 
 @implementation JMTabView
 
-@synthesize delegate = delegate_;
-@synthesize selectedIndex = selectedIndex_;
 @synthesize tabContainer = tabContainer_;
-@synthesize itemPadding = itemPadding_;
+@synthesize delegate = delegate_;
 
 - (void)dealloc;
 {
@@ -23,25 +21,13 @@
     [super dealloc];
 }
 
-- (id)initWithFrame:(CGRect)frame
-{
-    self = [super initWithFrame:frame];
-    if (self) 
-    {
-        [self setBackgroundLayer:[[[BarBackgroundLayer alloc] init] autorelease]];
-        self.backgroundColor = [UIColor clearColor];
-        self.autoresizingMask = UIViewAutoresizingFlexibleWidth;
-        self.tabContainer = [[[JMTabContainer alloc] initWithFrame:self.bounds] autorelease];
-        self.itemPadding = kTabItemPadding; 
-        [self addSubview:self.tabContainer];
-    }
-    return self;
-}
 
-- (id)initWithCoder:(NSCoder *)aDecoder {
+- (id)initWithCoder:(NSCoder *)aDecoder
+{
     self = [super initWithCoder:aDecoder];
     if (self)
     {
+        
         self.layer.borderWidth = 1.f;
         self.layer.borderColor = [UIColor colorWithWhite:0.75 alpha:1.f].CGColor;
         
@@ -51,9 +37,23 @@
         self.layer.shadowRadius = 1.f;
         self.layer.shadowPath = [UIBezierPath bezierPathWithRoundedRect:self.bounds cornerRadius:self.layer.cornerRadius].CGPath;
         self.clipsToBounds = NO;
-		
+
         
         self.clipsToBounds = YES;
+        [self setBackgroundLayer:[[[BarBackgroundLayer alloc] init] autorelease]];
+        self.backgroundColor = [UIColor clearColor];
+        self.autoresizingMask = UIViewAutoresizingFlexibleWidth;
+        self.tabContainer = [[[JMTabContainer alloc] initWithFrame:self.bounds] autorelease];
+        [self addSubview:self.tabContainer];
+    }
+    return self;
+}
+
+- (id)initWithFrame:(CGRect)frame
+{
+    self = [super initWithFrame:frame];
+    if (self) 
+    {
         [self setBackgroundLayer:[[[BarBackgroundLayer alloc] init] autorelease]];
         self.backgroundColor = [UIColor clearColor];
         self.autoresizingMask = UIViewAutoresizingFlexibleWidth;
@@ -86,7 +86,7 @@
 
 - (void)didSelectItemAtIndex:(NSUInteger)itemIndex;
 {
-    if (self.delegate && [self.delegate respondsToSelector:@selector(tabView:didSelectTabAtIndex:)])
+    if (self.delegate)
     {
         [self.delegate tabView:self didSelectTabAtIndex:itemIndex];
     }
@@ -102,8 +102,6 @@
 
 - (void)addTabItem:(JMTabItem *)tabItem;
 {
-    [tabItem setPadding:[self itemPadding]];
-    
     [self.tabContainer addTabItem:tabItem];
 }
 
@@ -113,19 +111,10 @@
     [self addTabItem:tabItem];
 }
 
-- (void)removeTabItemAtIndex:(NSUInteger)index {
-    [self.tabContainer removeTabItem:[self.tabContainer tabItemAtIndex:index]];
-}
-
-- (void)removeAllTabItems {
-    [self.tabContainer removeAllTabItems];
-}
-
 #if NS_BLOCKS_AVAILABLE
 - (void)addTabItemWithTitle:(NSString *)title icon:(UIImage *)icon executeBlock:(JMTabExecutionBlock)executeBlock;
 {
     JMTabItem * tabItem = [JMTabItem tabItemWithTitle:title icon:icon executeBlock:executeBlock];
-    
     [self addTabItem:tabItem];
 }
 #endif
@@ -134,24 +123,6 @@
 {
     [self.tabContainer layoutSubviews];
     [self.tabContainer animateSelectionToItemAtIndex:itemIndex];
-}
-
-- (NSUInteger)selectedIndex {
-    return [self.tabContainer selectedIndex];
-}
-
-- (void)setTabItemPadding:(CGSize)itemPadding {
-    self.itemPadding = itemPadding;
-    
-    NSUInteger tabItemIndex, numberOfTabItems = [[self tabContainer] numberOfTabItems];
-    
-    for (tabItemIndex=0; tabItemIndex<numberOfTabItems; tabItemIndex++) {
-        JMTabItem *tabItem = [[self tabContainer] tabItemAtIndex:tabItemIndex];
-        
-        [tabItem setPadding:itemPadding];
-    }
-    
-    [[self tabContainer] layoutSubviews];
 }
 
 #pragma Mark -
